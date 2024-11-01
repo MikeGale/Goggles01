@@ -20,11 +20,11 @@ which are mandatory.
 
 The heading can contain optional fields / metadata attributes:
 
-homepage — specifies a homepage URL displayed on your Goggle's profile.
-issues — specifies a URL where users can report issues for your Goggle.
-transferred_to — Allows to transfer ownership of a Goggle.
-avatar —  specifies a *valid* HEX color code for your Goggle.
-license — specifies the license of a Goggle's instructions.
+! homepage — specifies a homepage URL displayed on your Goggle's profile.
+! issues — specifies a URL where users can report issues for your Goggle.
+! transferred_to — Allows to transfer ownership of a Goggle.
+! avatar —  specifies a *valid* HEX color code for your Goggle.
+! license — specifies the license of a Goggle's instructions.
 
 ! Goggles are self-contained text files hosted in Github or  Gitlab. They contain instructions defining how the Brave Search chooses and ranks results.  They do this by imposing exclusions / discards, boosts and deboosts (downranks) to the native rankings produced by the search engine. They can target specific URL patterns  (and, eventually, website titles and other aspects of Web pages) and indicate how each ranking should be altered.
 
