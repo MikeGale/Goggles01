@@ -59,7 +59,7 @@ In practice, you will usually want to use '/' (or any other specific separator l
 Also note that the maximum number of carets allowed in a given instruction is limited.
 
 > /this/is/a/pattern^<br>
-> |https://example.org^
+> |https://example.org^<br>
 > /foo.js^
 
 By default, a pattern can match anywhere in the URL, but there are specific characters which can be used to indicate prefix or suffix matches: we call them "anchors".
@@ -68,8 +68,8 @@ The '|' character can be used at the beginning or end of an instruction to indic
 > |https://en.
 
 The following will match a suffix of the URL:
-> /some/path.html|
-> |https://brave.com|
+> /some/path.html|<br>
+> |https://brave.com|<br>
 
 ## Actions
 
@@ -82,24 +82,24 @@ The most basic option is 'site=', which can be used to limit a instruction to a 
 
 More options can be used to refine your targets. By default any instruction will apply to a URL, in future other aspects of a page can be defined:
 
-> ! web3$inurl
-> ! web3$intitle
-> ! web3$indescription
+> ! web3$inurl<br>
+> ! web3$intitle<br>
+> ! web3$indescription<br>
 > ! web3$incontent
 
 Finally, you can specify an 'action', which indicates how the ranking of a matched result should be changed by your instruction. This is the mechanism through which you can customize the ranking of results to your liking. You can use one of three possible actions in your instructions, and by default, any instruction without an action will be considered as 'boost':
 
-> /r/brave_browser/
-> /r/brave_browser/$boost
-> /r/brave_browser/$boost=2
+> /r/brave_browser/<br>
+> /r/brave_browser/$boost<br>
+> /r/brave_browser/$boost=2<br>
 > /r/brave_browser/$boost=3
 
 The value associated with the option indicate the 'strength' with which you want to alter the ranking (note: currently a maximum of 10). It can be used to boost results differently, inside of the same Goggle (e.g. some results should be favoured more than others).
 
 You can also downrank results:
 
-> /r/google/$downrank
-> /r/google/$downrank=2
+> /r/google/$downrank<br>
+> /r/google/$downrank=2<br>
 > /r/google/$downrank=3
 
 You can discard results completely:
