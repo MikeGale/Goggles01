@@ -53,11 +53,12 @@ The domain referred to will often be expressed in a site=<Domain> clause.
 In practice, you will usually want to use '/' (or any other specific separator like '=' or '?') most of the time in your patterns, except at the end of a pattern in cases where you want to be a little bit more generic, and express that your pattern should be either matching at the end of the URL or be followed by a separator and then arbitrary URL components.
 
 > For example, |https://example.org^ will match: 'https://example.org', 'https://example.org/' or 'https://example.org/path'; but it will *not* match 'https://example.org.ac', which is also a valid domain name starting with 'https://example.org'.
+> 
 > Another example, /foo.js^ will match: 'https://example.org/foo.js', 'https://example.org/foo.js?param=42', 'https://example.org/foo.js/' but it will *not* match 'https://example.org/foo.jsx' (because it is not followed by a separator).
 
 Also note that the maximum number of carets allowed in a given instruction is limited.
 
-> /this/is/a/pattern^
+> /this/is/a/pattern^<br>
 > |https://example.org^
 > /foo.js^
 
