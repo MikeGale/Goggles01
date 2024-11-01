@@ -39,6 +39,7 @@ A Goggle file consists of instructions, one per line. Empty lines, or comments (
 ## Instructions within the file, patterns and sites
 
 The simplest instruction is a plain-text pattern which can be found in URLs. The following would match any search result whose URL contains the pattern as-is:
+
     /this/is/a/pattern
 
 It is also possible to use some limited "globbing" capabilities such as the '\*' character which will match zero, one or more characters (note: the number of wildcards allowed in a given instruction is limited):
