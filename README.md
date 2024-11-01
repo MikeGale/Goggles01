@@ -30,13 +30,13 @@ Goggles are self-contained text files hosted in Github or  Gitlab. They contain 
 
 A Goggle file consists of instructions, one per line. Empty lines, or comments (starting with an exclamation mark: '!') are ignored. If there are invalid instructions, the Goggle will fail on submission, there will be feedback on the problem.  Failed Goggles will not be executed.
 
-##Size and limits:##
+## Size and limits:
 
 - Maximum file size 2MB
 - Maximum number of instructions 100 000
 - Maximum "*" or "^" in an instruction, 2
 
-##Instructions within the file, patterns and sites##
+## Instructions within the file, patterns and sites
 
 The simplest instruction is a plain-text pattern which can be found in URLs. The following would match any search result whose URL contains the pattern as-is:
 > /this/is/a/pattern
@@ -70,7 +70,7 @@ The following will match a suffix of the URL:
 > /some/path.html|
 > |https://brave.com|
 
-##Actions##
+## Actions
 
 Additionally, each instruction can specify a list of options, following the '$' character and separated by commas (','). Options can be used to more finely target specific search results, or to indicate how a matched result's ranking should be altered.
 
@@ -106,7 +106,7 @@ You can discard results completely:
 > $discard,site=idontwanttobepartoftheresults.com
 > /this/is/spam/$discard
 
-##From the developers.##
+## From the developers.
 
 Individually, each instruction can either target a very narrow set of pages (or even a single page), or a wider range of them, to apply reranking to a bigger set of results. In combination, hundreds or more instructions can allow you to express complex reranking functions.
 
