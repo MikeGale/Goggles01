@@ -93,23 +93,23 @@ More options can be used to refine your targets. By default any instruction will
 
 Finally, you can specify an 'action', which indicates how the ranking of a matched result should be changed by your instruction. This is the mechanism through which you can customize the ranking of results to your liking. You can use one of three possible actions in your instructions, and by default, any instruction without an action will be considered as 'boost':
 
-> /r/brave_browser/<br>
-> /r/brave_browser/$boost<br>
-> /r/brave_browser/$boost=2<br>
-> /r/brave_browser/$boost=3
+    /r/brave_browser/<br>
+    /r/brave_browser/$boost<br>
+    /r/brave_browser/$boost=2<br>
+    /r/brave_browser/$boost=3
 
 The value associated with the option indicate the 'strength' with which you want to alter the ranking (note: currently a maximum of 10). It can be used to boost results differently, inside of the same Goggle (e.g. some results should be favoured more than others).
 
 You can also downrank results:
 
-> /r/google/$downrank<br>
-> /r/google/$downrank=2<br>
-> /r/google/$downrank=3
+    /r/google/$downrank<br>
+    /r/google/$downrank=2<br>
+    /r/google/$downrank=3
 
 You can discard results completely:
 
-> $discard,site=idontwanttobepartoftheresults.com<br>
-> /this/is/spam/$discard
+    $discard,site=idontwanttobepartoftheresults.com<br>
+    /this/is/spam/$discard
 
 ## From the developers.
 
