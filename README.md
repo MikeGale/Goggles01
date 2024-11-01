@@ -71,6 +71,7 @@ The '|' character can be used at the beginning or end of an instruction to indic
     |https://en.
 
 The following will match a suffix of the URL:
+
     /some/path.html|
     |https://brave.com|
 
