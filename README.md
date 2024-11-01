@@ -11,10 +11,10 @@ They are simple text files.
 
 The file is headed by:
 
-    - ! name: <Name>
-    - ! description: <Descrip>
-    - ! public: false
-    - ! author: <Name>
+    ! name: <Name>
+    ! description: <Descrip>
+    ! public: false
+    ! author: <Name>
 
 which are mandatory.
 
@@ -34,12 +34,12 @@ A Goggle file consists of instructions, one per line. Empty lines, or comments (
 
 - Maximum file size 2MB
 - Maximum number of instructions 100 000
-- Maximum "*" or "^" in an instruction, 2
+- Maximum "\*" or "^" in an instruction, 2 each
 
 ## Instructions within the file, patterns and sites
 
 The simplest instruction is a plain-text pattern which can be found in URLs. The following would match any search result whose URL contains the pattern as-is:
-> /this/is/a/pattern
+    /this/is/a/pattern
 
 It is also possible to use some limited "globbing" capabilities such as the '\*' character which will match zero, one or more characters (note: the number of wildcards allowed in a given instruction is limited):
 > /this/is/\*/pattern
