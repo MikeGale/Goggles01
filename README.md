@@ -60,8 +60,8 @@ In practice, you will usually want to use '/' (or any other specific separator l
 
 Also note that the maximum number of carets allowed in a given instruction is limited.
 
-    /this/is/a/pattern^<br>
-    |https://example.org^<br>
+    /this/is/a/pattern^
+    |https://example.org^
     /foo.js^
 
 By default, a pattern can match anywhere in the URL, but there are specific characters which can be used to indicate prefix or suffix matches: we call them "anchors".
