@@ -52,31 +52,31 @@ The domain referred to will often be expressed in a site=<Domain> clause.
 
 In practice, you will usually want to use '/' (or any other specific separator like '=' or '?') most of the time in your patterns, except at the end of a pattern in cases where you want to be a little bit more generic, and express that your pattern should be either matching at the end of the URL or be followed by a separator and then arbitrary URL components.
 
-> For example, |https://example.org^ will match: 'https://example.org', 'https://example.org/' or 'https://example.org/path'; but it will *not* match 'https://example.org.ac', which is also a valid domain name starting with 'https://example.org'.
+> For example, |https<nolink>://example.org^ will match: 'https<nolink>://example.org', 'https<nolink>://example.org/' or 'https<nolink>://example.org/path'; but it will *not* match 'https<nolink>://example.org.ac', which is also a valid domain name starting with 'https<nolink>://example.org'.
 > 
-> Another example, /foo.js^ will match: 'https://example.org/foo.js', 'https://example.org/foo.js?param=42', 'https://example.org/foo.js/' but it will *not* match 'https://example.org/foo.jsx' (because it is not followed by a separator).
+> Another example, /foo.js^ will match: 'https<nolink>://example.org/foo.js', 'https<nolink>://example.org/foo.js?param=42', 'https<nolink>://example.org/foo.js/' but it will *not* match 'https<nolink>://example.org/foo.jsx' (because it is not followed by a separator).
 
 Also note that the maximum number of carets allowed in a given instruction is limited.
 
 > /this/is/a/pattern^<br>
-> |https://example.org^<br>
+> |https<nolink>://example.org^<br>
 > /foo.js^
 
 By default, a pattern can match anywhere in the URL, but there are specific characters which can be used to indicate prefix or suffix matches: we call them "anchors".
 
 The '|' character can be used at the beginning or end of an instruction to indicate anchoring. The following instruction will match a prefix of the URL:
-> |https://en.
+> |https<nolink>://en.
 
 The following will match a suffix of the URL:
 > /some/path.html|<br>
-> |https://brave.com|<br>
+> |https<nolink>://brave.com|<br>
 
 ## Actions
 
 Additionally, each instruction can specify a list of options, following the '$' character and separated by commas (','). Options can be used to more finely target specific search results, or to indicate how a matched result's ranking should be altered.
 
 The most basic option is 'site=', which can be used to limit a instruction to a specific website, based on its domain. Options can be specified on their own (e.g. if you want to target any page of a site) or in conjunction with a pattern:
-> $site=brave.com
+> $site=brave.com<br>
 > /blog/$site=brave.com
 
 
@@ -104,7 +104,7 @@ You can also downrank results:
 
 You can discard results completely:
 
-> $discard,site=idontwanttobepartoftheresults.com
+> $discard,site=idontwanttobepartoftheresults.com<br>
 > /this/is/spam/$discard
 
 ## From the developers.
