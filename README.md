@@ -61,18 +61,18 @@ In practice, you will usually want to use '/' (or any other specific separator l
 Also note that the maximum number of carets allowed in a given instruction is limited.
 
     /this/is/a/pattern^<br>
-    |https<nolink>://example.org^<br>
+    |https://example.org^<br>
     /foo.js^
 
 By default, a pattern can match anywhere in the URL, but there are specific characters which can be used to indicate prefix or suffix matches: we call them "anchors".
 
 The '|' character can be used at the beginning or end of an instruction to indicate anchoring. The following instruction will match a prefix of the URL:
 
-    |https<nolink>://en.
+    |https://en.
 
 The following will match a suffix of the URL:
     /some/path.html|<br>
-    |https<nolink>://brave.com|<br>
+    |https://brave.com|<br>
 
 ## Actions
 
