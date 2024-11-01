@@ -11,29 +11,30 @@ They are simple text files.
 
 The file is headed by:
 
-! name: <Name>
-! description: <Descrip>
-! public: false
-! author: <Name>
+    - ! name: <Name>
+    - ! description: <Descrip>
+    - ! public: false
+    - ! author: <Name>
 
 which are mandatory.
 
 The heading can contain optional fields / metadata attributes:
 
-! homepage — specifies a homepage URL displayed on your Goggle's profile.
-! issues — specifies a URL where users can report issues for your Goggle.
-! transferred_to — Allows to transfer ownership of a Goggle.
-! avatar —  specifies a *valid* HEX color code for your Goggle.
-! license — specifies the license of a Goggle's instructions.
+    - ! homepage — specifies a homepage URL displayed on your Goggle's profile.
+    - ! issues — specifies a URL where users can report issues for your Goggle.
+    - ! transferred_to — Allows to transfer ownership of a Goggle.
+    - ! avatar —  specifies a *valid* HEX color code for your Goggle.
+    - ! license — specifies the license of a Goggle's instructions.
 
-! Goggles are self-contained text files hosted in Github or  Gitlab. They contain instructions defining how the Brave Search chooses and ranks results.  They do this by imposing exclusions / discards, boosts and deboosts (downranks) to the native rankings produced by the search engine. They can target specific URL patterns  (and, eventually, website titles and other aspects of Web pages) and indicate how each ranking should be altered.
+Goggles are self-contained text files hosted in Github or  Gitlab. They contain instructions defining how the Brave Search chooses and ranks results.  They do this by imposing exclusions / discards, boosts and deboosts (downranks) to the native rankings produced by the search engine. They can target specific URL patterns  (and, eventually, website titles and other aspects of Web pages) and indicate how each ranking should be altered.
 
 A Goggle file consists of instructions, one per line. Empty lines, or comments (starting with an exclamation mark: '!') are ignored. If there are invalid instructions, the Goggle will fail on submission, there will be feedback on the problem.  Failed Goggles will not be executed.
 
 Size and limits:
-Maximum file size 2MB
-Maximum number of instructions 100 000
-Maximum "*" or "^" in an instruction, 2
+
+- Maximum file size 2MB
+- Maximum number of instructions 100 000
+- Maximum "*" or "^" in an instruction, 2
 
 Instructions within the file
 
@@ -54,27 +55,26 @@ For example, |https://example.org^ will match: 'https://example.org', 'https://e
 
 Another example, /foo.js^ will match: 'https://example.org/foo.js', 'https://example.org/foo.js?param=42', 'https://example.org/foo.js/' but it will *not* match 'https://example.org/foo.jsx' (because it is not followed by a ! separator).
 
-! Also note that the maximum number of carets allowed in a given instruction is limited.
+Also note that the maximum number of carets allowed in a given instruction is limited.
 
-/this/is/a/pattern^
-|https://example.org^
-/foo.js^
+> /this/is/a/pattern^
+> |https://example.org^
+> /foo.js^
 
-! By default, a pattern can match anywhere in the URL, but there are specific characters which can be used to indicate prefix or suffix matches: we call them "anchors".
+By default, a pattern can match anywhere in the URL, but there are specific characters which can be used to indicate prefix or suffix matches: we call them "anchors".
 
 The '|' character can be used at the beginning or end of an instruction to indicate anchoring. The following instruction will match a prefix of the URL:
 |https://en.
 
 The following will match a suffix of the URL:
-/some/path.html|
-
-! |https://brave.com|
+> /some/path.html|
+> |https://brave.com|
 
 Additionally, each instruction can specify a list of options, following the '$' character and separated by commas (','). Options can be used to more finely target specific search results, or to indicate how a matched result's ranking should be altered.
 
 The most basic option is 'site=', which can be used to limit a instruction to a specific website, based on its domain. Options can be specified on their own (e.g. if you want to target any page of a site) or in conjunction with a pattern:
-$site=brave.com
-/blog/$site=brave.com
+> $site=brave.com
+> /blog/$site=brave.com
 
 
 More options can be used to refine your targets. By default any instruction will apply to a URL, in future other aspects of a page can be defined:
