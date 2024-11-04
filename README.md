@@ -31,10 +31,10 @@ Goggles are self-contained text files hosted in Github or  Gitlab. They contain 
 A Goggle file consists of instructions, one per line. Empty lines, or comments (starting with an exclamation mark: '!') are ignored. If there are invalid instructions, the Goggle will fail on submission, there will be feedback on the problem.  Failed Goggles will not be executed.
 
 ## Background[^1]
-[^1]  [Whitepaper on the "Goggles" idea](https://brave.com/static-assets/files/goggles.pdf)
+[^1]:  [Whitepaper on the "Goggles" idea](https://brave.com/static-assets/files/goggles.pdf)
 
 There are many web pages and domains on the Internet, (more than 300 million domains are listed in some places [^2]).  Typical web search engines cannot handle all of this content, so they discard a lot.  This effectively censors what search engines deliver, often making the best content **for you** unreachable using them.  Goggles is an approach to give some control to the user in return for some preparation work up front.
-[^2]  [One listing of Internet domain by top level domain] (https://research.domaintools.com/statistics/tld-counts/)
+[^2]:  [One listing of Internet domain by top level domain] (https://research.domaintools.com/statistics/tld-counts/)
 
 Current search engines aim to deliver results to the user within about one second.  To do that they typically split the search into several phases.  The first "recall phase" uses fast and simple techniques to obtain a lot of matches.  There may be billions of them.  These are then pruned to deliver probably a few thousand. The phases that remove most of the initial candidates are often known as precision phases, they are increasingly sophisticated and costly to run. The final phase is ranking which puts the results into the order that the user sees.
 
