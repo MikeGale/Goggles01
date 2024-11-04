@@ -34,25 +34,27 @@ A Goggle file consists of instructions, one per line. Empty lines, or comments (
 [^1]:  [Whitepaper on the "Goggles" idea](https://brave.com/static-assets/files/goggles.pdf)
 
 There are many web pages and domains on the Internet, (more than 300 million domains are listed in some places [^2]).  Typical web search engines cannot handle all of this content, so they discard a lot.  This effectively censors what search engines deliver, often making the best content **for you** unreachable using them.  Goggles is an approach to give some control to the user in return for some preparation work up front.
-[^2]:  [One listing of Internet domain by top level domain](https://research.domaintools.com/statistics/tld-counts/)
+[^2]:  [One count of Internet domain by top level domain](https://research.domaintools.com/statistics/tld-counts/)
 
-Current search engines aim to deliver results to the user within about one second.  To do that they typically split the search into several phases.  The first "recall phase" uses fast and simple techniques to obtain a lot of matches.  There may be billions of them.  These are then pruned to deliver probably a few thousand. The phases that remove most of the initial candidates are often known as precision phases, they are increasingly sophisticated and costly to run. The final phase is ranking which puts the results into the order that the user sees.
+Current search engines aim to deliver results to the user within about one second.  To do that they typically split the search into several phases.  The first "recall phase" uses fast and simple techniques to obtain a lot of matches.  There may be billions of them.  These are then pruned to deliver probably a few thousand. The phases that remove most of the initial candidates are often known as precision phases, they are increasingly sophisticated and costly to run. The final phase is "ranking" which puts the results into the order that the user sees.
 
 Goggles are most powerful when they apply to many results, not few.
 
 >Consider the Goggle "Filter out the results from the top 1000 domains on the internet", which could be an interesting way to explore the internet. Applying this on the final result set for most queries would lead to very few results, if any, due to the inherent bias in most search engines to surface content from popular domains. The rules defined by Goggles are better applied to the largest candidate-set possible, so that the intersection between candidates and rules to be applied is not empty. Only when that intersection is large enough, will the re-ranking introduced by Goggles be noticeable.
 
-For that to work Googles must be deeply integrated into the search system. Such integration poses issue:
+For that to work Googles must be deeply integrated into the search system. Such integration poses issues:
 
-1.  Efficiency: applying the rules against all elements of the candidate set (typically URLs) has to be extremely fast to minimize the overhead. In the following section we will present our solution to this issue.
-2.  Independence: the host search engine needs to have total control over their index.
+1.  Efficiency: applying the rules against all elements of the candidate set (typically URLs) has to be extremely fast.
+2.  Independence: the host search engine needs to have control over their index.
 
-Independence is available to search engines running their own index, like Google, Bing, Yandex, Baidu and Brave. Search engines that rely on external indices may not receive large enough candidate sets to work well.  For example DuckDuckGo, Qwant and Ecosia, which rely on the Bing API, are limited to what the API gives them.
+Independence is available to search engines running their own index, like Google, Bing, Yandex, Baidu and Brave. Search engines that rely on external indices may not receive large enough candidate sets.  For example DuckDuckGo, Qwant and Ecosia, which rely on the Bing API, are limited to what the API gives them.
 
 Integrating this enhanced capability into search engines is not a trivial task.
 
+The current Goggles system (2024-11-04 14:22:51) selects by URL.  This could be extended to other sorts of selector, like the author of a web page.
 
-## Size and limits:
+
+## Size and limits of Goggles definition files:
 
 - Maximum file size 2MB
 - Maximum number of instructions 100 000
@@ -80,7 +82,7 @@ In practice, you will usually want to use '/' (or any other specific separator l
 > 
 > Another example, /foo.js^ will match: 'https<nolink>://example.org/foo.js', 'https<nolink>://example.org/foo.js?param=42', 'https<nolink>://example.org/foo.js/' but it will *not* match 'https<nolink>://example.org/foo.jsx' (because it is not followed by a separator).
 
-Also note that the maximum number of carets allowed in a given instruction is limited.
+Also note that only 2 carets are allowed in an instruction.
 
     /this/is/a/pattern^
     |https://example.org^
@@ -97,9 +99,9 @@ The following will match a suffix of the URL:
     /some/path.html|
     |https://brave.com|
 
-## Actions
+## Site and Actions
 
-Additionally, each instruction can specify a list of options, following the '$' character and separated by commas (','). Options can be used to more finely target specific search results, or to indicate how a matched result's ranking should be altered.
+In addition, each instruction can specify a list of options, following the '$' character and separated by commas (','). Options can be used to more finely target specific search results, or to indicate how a matched result's ranking should be altered.
 
 The most basic option is 'site=', which can be used to limit a instruction to a specific website, based on its domain. Options can be specified on their own (e.g. if you want to target any page of a site) or in conjunction with a pattern:
 
@@ -107,21 +109,21 @@ The most basic option is 'site=', which can be used to limit a instruction to a 
     /blog/$site=brave.com
 
 
-More options can be used to refine your targets. By default any instruction will apply to a URL, in future other aspects of a page can be defined:
+More options can be used to refine your targets. By default any instruction will apply to a URL, in future other aspects of a page may be added.  The following are mentioned in the Whitepaper:
 
     ! web3$inurl
     ! web3$intitle
     ! web3$indescription
     ! web3$incontent
 
-Finally, you can specify an 'action', which indicates how the ranking of a matched result should be changed by your instruction. This is the mechanism through which you can customize the ranking of results to your liking. You can use one of three possible actions in your instructions, and by default, any instruction without an action will be considered as 'boost':
+Finally, you can specify an 'action'.  **These actions are the elements that change the search results you get.**  There are three of them: boost, downrank, and discard.  An instruction without an explicit action is a 'boost':
 
     /r/brave_browser/
     /r/brave_browser/$boost
     /r/brave_browser/$boost=2
     /r/brave_browser/$boost=3
 
-The value associated with the option indicate the 'strength' with which you want to alter the ranking (note: currently a maximum of 10). It can be used to boost results differently, inside of the same Goggle (e.g. some results should be favoured more than others).
+The amount of a boost is an integer between 0 and 10.  They give some control of matches in the result order.
 
 You can also downrank results:
 
@@ -129,10 +131,12 @@ You can also downrank results:
     /r/google/$downrank=2
     /r/google/$downrank=3
 
-You can discard results completely:
+You can also discard results completely:
 
     $discard,site=idontwanttobepartoftheresults.com
     /this/is/spam/$discard
+
+If several actions can apply to a particular URL only one is used, as follows:  a discard takes precedence, then the highest boost, then the lowest downrank.
 
 ## From the developers.
 
@@ -140,7 +144,7 @@ Individually, each instruction can either target a very narrow set of pages (or 
 
 Although the Goggles language could express instructions to search through a small set of websites or act as a blocklist, Goggles really shine when used to express boosting and downranking across many domains and pages.
 
-Goggles also impacts the behaviour of features such as Discussions and News or Videos clusters, giving you full control on your search experience.
+Goggles also impacts the behaviour of features such as Discussions and News or Videos clusters, giving you greater control on your search experience.
 
 We are already using Goggles internally, and we can't wait to see what you will do with them!
 
@@ -149,3 +153,17 @@ To learn more about Goggles, we recommend that you read the "Learn by example" s
 - https://github.com/brave/goggles-quickstart/blob/main/getting-started.md#learn-by-example
 - https://github.com/brave/goggles-quickstart/blob/main/getting-started.md
 - https://github.com/brave/goggles-quickstart/blob/main/goggles/quickstart.goggle
+
+## Other requirements
+
+To use Goggles effectively you need to maintain a list of favoured targets, and details of how much they are favoured.  Such a system could have information about how much a URL is favoured for different search purposes.  It might be able to construct parts of Googles programmatically.
+
+The list should contain targets that you wish to avoid entirely.
+
+Note:  Targets that you wish to avoid in one context, you may wish to see in another.  For example, known disinformation sources.
+
+*(A target is the combination of the matching pattern, and the site.)*
+
+An effective approach would be to find diligent and compatible people who also maintain target information and working with them, to reduce your personal load.
+
+Where Goggles are on the radar of people who create Internet content, you may experience others attempting to influence their own boost factors and those of others.  This will generally be a form of "contamination" though it could be handled as in your system within a "perverted" list maintained to illustrate the impact of such influences.  You should declare such influence in any list you publish, both for yourself and anybody else using the Goggle.
