@@ -20,15 +20,37 @@ which are mandatory.
 
 The heading can contain optional fields / metadata attributes:
 
-    ! homepage — specifies a homepage URL displayed on your Goggle's profile.
-    ! issues — specifies a URL where users can report issues for your Goggle.
-    ! transferred_to — Allows to transfer ownership of a Goggle.
-    ! avatar —  specifies a *valid* HEX color code for your Goggle.
-    ! license — specifies the license of a Goggle's instructions.
+    ! homepage: specifies a homepage URL displayed on your Goggle's profile.
+    ! issues: specifies a URL where users can report issues for your Goggle.
+    ! transferred_to: Allows to transfer ownership of a Goggle.
+    ! avatar:  specifies a *valid* HEX color code for your Goggle.
+    ! license: specifies the license of a Goggle's instructions.
 
 Goggles are self-contained text files hosted in Github or  Gitlab. They contain instructions defining how the Brave Search chooses and ranks results.  They do this by imposing exclusions / discards, boosts and deboosts (downranks) to the native rankings produced by the search engine. They can target specific URL patterns  (and, eventually, website titles and other aspects of Web pages) and indicate how each ranking should be altered.
 
 A Goggle file consists of instructions, one per line. Empty lines, or comments (starting with an exclamation mark: '!') are ignored. If there are invalid instructions, the Goggle will fail on submission, there will be feedback on the problem.  Failed Goggles will not be executed.
+
+## Background[^1]
+[^1]  [Whitepaper on the "Goggles" idea](https://brave.com/static-assets/files/goggles.pdf)
+
+There are many web pages and domains on the Internet, (more than 300 million domains are listed in some places [^2]).  Typical web search engines cannot handle all of this content, so they discard a lot.  This effectively censors what search engines deliver, often making the best content **for you** unreachable using them.  Goggles is an approach to give some control to the user in return for some preparation work up front.
+[^2]  [One listing of Internet domain by top level domain] (https://research.domaintools.com/statistics/tld-counts/)
+
+Current search engines aim to deliver results to the user within about one second.  To do that they typically split the search into several phases.  The first "recall phase" uses fast and simple techniques to obtain a lot of matches.  There may be billions of them.  These are then pruned to deliver probably a few thousand. The phases that remove most of the initial candidates are often known as precision phases, they are increasingly sophisticated and costly to run. The final phase is ranking which puts the results into the order that the user sees.
+
+Goggles are most powerful when they apply to many results, not few.
+
+>Consider the Goggle "Filter out the results from the top 1000 domains on the internet", which could be an interesting way to explore the internet. Applying this on the final result set for most queries would lead to very few results, if any, due to the inherent bias in most search engines to surface content from popular domains. The rules defined by Goggles are better applied to the largest candidate-set possible, so that the intersection between candidates and rules to be applied is not empty. Only when that intersection is large enough, will the re-ranking introduced by Goggles be noticeable.
+
+For that to work Googles must be deeply integrated into the search system. Such integration poses issue:
+
+1.  Efficiency: applying the rules against all elements of the candidate set (typically URLs) has to be extremely fast to minimize the overhead. In the following section we will present our solution to this issue.
+2.  Independence: the host search engine needs to have total control over their index.
+
+Independence is available to search engines running their own index, like Google, Bing, Yandex, Baidu and Brave. Search engines that rely on external indices may not receive large enough candidate sets to work well.  For example DuckDuckGo, Qwant and Ecosia, which rely on the Bing API, are limited to what the API gives them.
+
+Integrating this enhanced capability into search engines is not a trivial task.
+
 
 ## Size and limits:
 
