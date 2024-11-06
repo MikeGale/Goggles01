@@ -1,13 +1,33 @@
 # Goggles01
-Search Engine "Goggles" for the Brave search engine.
 
-Online at:  https://github.com/MikeGale/Goggles01
+## Introduction
 
-Licence:  CC0-1.0 license
+The founders of Google predicted from the start that the commercialisation of Search Engines, with advertising would be disastrous.
 
-Brave googles are specifications that define how search is performed in the Brave engine.
+For many people this has proven true.
 
-They are simple text files.
+Some are doing things to improve what they see as fairly useless search engines.  Two approaches are:
+
+1.  Run your own search index and search engine.
+2.  Modify existing search indices to better suit you personally.
+
+This is about one way to modify an existing search index and engine.
+
+## About
+
+This material, presented as a file repository, is part of a solution that uses a feature of the Brave search engine, to customise searches.  The feature is called "Goggles".  It was originally part of the "Cliqz" search engine.  It was discontinued, then taken over by the Brave browser company, and revived.
+
+The content is made up of text files which are used to alter search behaviour at a fairly fundamental level, without running your own index and search engine.  That content comprises text files which can be found online at at:  https://github.com/MikeGale/Goggles01 and https://gist.github.com/MikeGale/
+
+This material is **not** intended to be widely publicised.  It is intended as a source from which determined individuals can get a little inspiration to make their own *Goggles*.  Each person obviously has their own needs so a one-size-fits-all approach is really a one-size-fits-none approach.  Much like the major search engines already are.  The material has a fairly broad license, you can do with it most things you might want to, that licence is a:  CC0-1.0 license
+
+If you use it, and find it valuable, please consider sharing it with a few others to help them too.
+
+### The Googles specification
+
+Brave *Googles* are specifications, within a text file, that define how customised search can be performed in the Brave engine.  (Other search engines may adopt the idea in future.  2024-11-06 14:11:26  I'm not aware of any that have done that yet.)
+
+Goggles are simple text files.
 
 The file is headed by:
 
@@ -26,17 +46,17 @@ The heading can contain optional fields / metadata attributes:
     ! avatar:  specifies a *valid* HEX color code for your Goggle.
     ! license: specifies the license of a Goggle's instructions.
 
-Goggles are self-contained text files hosted in Github or  Gitlab. They contain instructions defining how the Brave Search chooses and ranks results.  They do this by imposing exclusions / discards, boosts and deboosts (downranks) to the native rankings produced by the search engine. They can target specific URL patterns  (and, eventually, website titles and other aspects of Web pages) and indicate how each ranking should be altered.
+Goggles are self-contained text files hosted onn Github or  Gitlab. They contain instructions defining how the Brave Search chooses and ranks results.  They do this by imposing exclusions / discards, boosts and deboosts (downranks) to the native rankings produced by the search engine. They can target specific URL patterns  (and, eventually, website titles and other aspects of Web pages) and define how each ranking should be altered.
 
 A Goggle file consists of instructions, one per line. Empty lines, or comments (starting with an exclamation mark: '!') are ignored. If there are invalid instructions, the Goggle will fail on submission, there will be feedback on the problem.  Failed Goggles will not be executed.
 
 ## Background[^1]
 [^1]:  [Whitepaper on the "Goggles" idea](https://brave.com/static-assets/files/goggles.pdf)
 
-There are many web pages and domains on the Internet, (more than 300 million domains are listed in some places [^2]).  Typical web search engines cannot handle all of this content, so they discard a lot.  This effectively censors what search engines deliver, often making the best content **for you** unreachable using them.  Goggles is an approach to give some control to the user in return for some preparation work up front.
+There are many web pages and domains on the Internet, (more than 300 million domains are listed in some places [^2]).  Typical web search engines cannot handle all of this content in the time available, so they throw out most potential **search results**, on many queries.  This effectively censors what search engines deliver, often making the best content **for you** unreachable uby them.  Goggles is an approach to give some control to the users in return for some preparation work up front, by the user.
 [^2]:  [One count of Internet domain by top level domain](https://research.domaintools.com/statistics/tld-counts/)
 
-Current search engines aim to deliver results to the user within about one second.  To do that they typically split the search into several phases.  The first "recall phase" uses fast and simple techniques to obtain a lot of matches.  There may be billions of them.  These are then pruned to deliver probably a few thousand. The phases that remove most of the initial candidates are often known as precision phases, they are increasingly sophisticated and costly to run. The final phase is "ranking" which puts the results into the order that the user sees.
+Current search engines aim to deliver results to the user within about one second.  To do that they typically split the search into several phases.  The first "recall phase" uses fast and simple techniques to obtain a lot of matches.  There may be a lot of them.  The list is then pruned to deliver maybe a few thousand. The phases that remove most of the initial candidates are often known as precision phases, they are increasingly sophisticated and costly to run. The final phase is "ranking" which puts the results into the order that the user sees.
 
 Goggles are most powerful when they apply to many results, not few.
 
@@ -47,14 +67,16 @@ For that to work Googles must be deeply integrated into the search system. Such 
 1.  Efficiency: applying the rules against all elements of the candidate set (typically URLs) has to be extremely fast.
 2.  Independence: the host search engine needs to have control over their index.
 
-Independence is available to search engines running their own index, like Google, Bing, Yandex, Baidu and Brave. Search engines that rely on external indices may not receive large enough candidate sets.  For example DuckDuckGo, Qwant and Ecosia, which rely on the Bing API, are limited to what the API gives them.
+Independence is available to search engines running their own index, like Google, Bing, Yandex, Baidu, Brave, Marginalia ... Search engines that rely on external indices may not receive large enough candidate sets.  For example DuckDuckGo, Qwant and Ecosia, which rely on the Bing API, are limited to what the API gives them.
 
 Integrating this enhanced capability into search engines is not a trivial task.
 
-The current Goggles system (2024-11-04 14:22:51) selects by URL.  This could be extended to other sorts of selector, like the author of a web page.
+The current Goggles system (2024-11-04 14:22:51) selects by URL.  This could be extended to other sorts of selector.  I'd like to see selection by author or editorial team.
 
 
 ## Size and limits of Goggles definition files:
+
+A Googles definition has limits, some are:
 
 - Maximum file size 2MB
 - Maximum number of instructions 100 000
@@ -62,11 +84,13 @@ The current Goggles system (2024-11-04 14:22:51) selects by URL.  This could be 
 
 ## Instructions within the file, patterns and sites
 
-The simplest instruction is a plain-text pattern which can be found in URLs. The following would match any search result whose URL contains the pattern as-is:
+The file identifies what is targeted, then what is to done to it.  The targeting is achieved as follows:
+
+The simplest targeting instruction is a plain-text pattern which can be select some URLs. The following would match any search result whose URL contains the pattern as-is:
 
     /this/is/a/pattern
 
-It is also possible to use some limited "globbing" capabilities such as the '\*' character which will match zero, one or more characters (note: the number of wildcards allowed in a given instruction is limited):
+It is also possible to use some limited "globbing" capabilities such as the '\*' character which will match zero, one or more characters (note: the number of wildcards allowed in a given instruction is limited to 2 each at present):
 
     /this/is/\*/pattern
 
@@ -76,7 +100,7 @@ This means that it can match either the end of the URL or any character that is 
 
 The domain referred to will often be expressed in a site=<Domain> clause.
 
-In practice, you will usually want to use '/' (or any other specific separator like '=' or '?') most of the time in your patterns, except at the end of a pattern in cases where you want to be a little bit more generic, and express that your pattern should be either matching at the end of the URL or be followed by a separator and then arbitrary URL components.
+In practice, you will usually want to use '/' (or any other specific separator like '=' or '?') most of the time in your patterns, except at the end of a pattern in cases where you want to be a little bit more generic, and have a pattern that can either matching at the end of the URL, or be followed by a separator and then arbitrary URL components.
 
 > For example, |https<nolink>://example.org^ will match: 'https<nolink>://example.org', 'https<nolink>://example.org/' or 'https<nolink>://example.org/path'; but it will *not* match 'https<nolink>://example.org.ac', which is also a valid domain name starting with 'https<nolink>://example.org'.
 > 
@@ -88,7 +112,7 @@ Also note that only 2 carets are allowed in an instruction.
     |https://example.org^
     /foo.js^
 
-By default, a pattern can match anywhere in the URL, but there are specific characters which can be used to indicate prefix or suffix matches: we call them "anchors".
+By default, a pattern can match anywhere in the URL, but there are specific characters which can be used to indicate prefix or suffix matches: they are called "anchors".
 
 The '|' character can be used at the beginning or end of an instruction to indicate anchoring. The following instruction will match a prefix of the URL:
 
@@ -156,7 +180,9 @@ To learn more about Goggles, we recommend that you read the "Learn by example" s
 
 ## Other requirements
 
-To use Goggles effectively you need to maintain a list of favoured targets, and details of how much they are favoured.  Such a system could have information about how much a URL is favoured for different search purposes.  It might be able to construct parts of Googles programmatically.
+To maintain your own Goggles, keep them up to date and make new ones, additional systems behind the scenes will make life easier.  This might start as some files containing parts of your Googles.  For example a master list of the sites you automatically discard.  Later you might refine that automatically update your own Goggles, and maybe to even collect your rating of web sites as you browse them.
+
+To use Goggles effectively you could maintain a list of favoured targets, and details of how much they are favoured.  Maybe in a database.  Such a system could have information about how much a URL is favoured for different search purposes, which means that the same database can be used to create several goggles.  This could be automated, to some degree.
 
 The list should contain targets that you wish to avoid entirely.
 
@@ -166,4 +192,4 @@ Note:  Targets that you wish to avoid in one context, you may wish to see in ano
 
 An effective approach would be to find diligent and compatible people who also maintain target information and working with them, to reduce your personal load.
 
-Where Goggles are on the radar of people who create Internet content, you may experience others attempting to influence their own boost factors and those of others.  This will generally be a form of "contamination" though it could be handled as in your system within a "perverted" list maintained to illustrate the impact of such influences.  You should declare such influence in any list you publish, both for yourself and anybody else using the Goggle.
+Where Goggles are on the radar of people who create Internet content, you may experience others attempting to influence your Goggle.  This will generally be a form of "contamination" though it could be handled as a "perverted" list maintained to illustrate and compare.  It's a good idea to document such influence or attempted influence.  This will not only be useful for other people but also for yourself.
